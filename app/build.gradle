@@ -1,0 +1,286 @@
+plugins {
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
+}
+def versionProps = new Properties()
+file("../version.properties").withInputStream { versionProps.load(it) }
+
+android {
+    namespace 'com.ci.github.androidworkflow'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.ci.github.androidworkflow"
+        minSdk 27
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField 'String', 'VERSION_NAME', "\"${versionProps['versionName']}\""
+            buildConfigField 'String', 'VERSION_CODE', "\"${versionProps['versionCode']}\""
+        }
+        release {
+            minifyEnabled false
+            shrinkResources false
+            buildConfigField 'String', 'VERSION_NAME', "\"${versionProps['versionName']}\""
+            buildConfigField 'String', 'VERSION_CODE', "\"${versionProps['versionCode']}\""
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        buildConfig true
+    }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+    flavorDimensions "version"
+    productFlavors {
+        uat {
+            dimension "version"
+            applicationId "com.ada.astrapayupdate"
+            resValue "string", "app_name", "AstraPay UAT"
+
+            //BASEURL FRONTEND GATEAWAY
+            buildConfigField 'String', 'BASE_URL_FRONTEND_GATEWAY', '"https://frontend-uat.astrapay.com"'
+
+            // TRANSACTION HISTORY DETAIL BASEURL
+            buildConfigField 'String', 'URL_TRANSACTION_HISTORY_DETAIL', '"https://frontend-uat.astrapay.com/transaction-service/me/histories/{id}"'
+
+            //QRIS SDK Token
+            buildConfigField 'String', 'ASTRAPAY_SDK_QRIS_TOKEN', '"XTOKEN"'
+            buildConfigField 'String', 'ASTRAPAY_SDK_QRIS_ENV', '"UAT"'
+
+            buildConfigField 'String', 'BASE_URL_API', '"https://vega.astrapay.com"'
+            buildConfigField 'String', 'BASE_URL_FIFPAYREST', '"https://vega.astrapay.com"'
+            buildConfigField 'String', 'BASE_URL_NEW_API', '"https://frontend-uat.astrapay.com"'
+            buildConfigField 'String', 'BASE_URL_WEBVIEW', '"https://vega.astrapay.com"'
+            buildConfigField 'String', 'BASE_URL_CMS', '"https://cms-delivery-uat-gcp.astrapay.com"'
+            buildConfigField 'String', 'BASE_URL_PAYLATER', '"https://paylater-uat-api-gcp.astrapay.com/"'
+            buildConfigField 'String', 'BASE_URL_NOTIFICATION', '"https://notification-dev.astrapay.com"'
+
+            // FAQ BLOCK ACCOUNT
+            buildConfigField 'String', 'URL_FAQ_BLOCK_ACCOUNT', '"https://www.astrapay.com/faq"'
+
+            // CASH OUT API REST
+            buildConfigField 'String', 'BASE_URL_API_CASHOUT', '"http://172.20.6.64:8880/cashout-service/"'
+
+            buildConfigField 'String', 'WEBVIEW_URL_TERM_AND_CONDITION', '"https://cms-delivery-uat-gcp.astrapay.com/webviews/terms-and-conditions"'
+            buildConfigField 'String', 'WEBVIEW_URL_PRIVACY_POLICY', '"https://cms-delivery-uat-gcp.astrapay.com/webviews/privacy-policy"'
+            buildConfigField 'String', 'WEBVIEW_URL_FAQ', '"https://cms-delivery-uat-gcp.astrapay.com/webviews/faq"'
+            // Webview
+            buildConfigField 'String', 'WEBVIEW_URL_MAUCASH_FAQ', '"https://webapply.maucash.id/faq"'
+            buildConfigField 'String', 'WEBVIEW_URL_TOPUP', '"https://cms-delivery-uat-gcp.astrapay.com/webviews/top-up/top-up-method?account=%s&topupbalancemaximal=%.0f"'
+            buildConfigField 'String', 'WEBVIEW_URL_MITRA_LIST', '"https://cms-delivery-uat-gcp.astrapay.com/webviews/mitra-list"'
+            buildConfigField 'String', 'WEBVIEW_URL_MAUCASH_TERM_AND_CONDITION', '"https://cms-delivery-uat-gcp.astrapay.com/webviews/terms-and-conditions-maupaylater"'
+            buildConfigField 'String', 'WEBVIEW_URL_MAUCASH_DISCLAIMER', '"https://web.maucash.id/resource/protocol/disclaimer.html"'
+            buildConfigField 'String', 'WEBVIEW_URL_MAUCASH_LANDING_PAGE', '"https://cms-delivery-uat-gcp.astrapay.com/webviews/paylater/landing-page"'
+            buildConfigField 'String', 'WEBVIEW_URL_TERM_AND_CONDITION_REGISTRATION_BPJSTK', '"https://cms-delivery-uat-gcp.astrapay.com/webviews/tnc-registrasi-bpjstk"'
+            buildConfigField 'String', 'WEBVIEW_URL_WELCOME_PAGE_BJJ', '"https://cms-delivery-uat.astrapay.com/webviews/bjj/onboarding/welcome-page"'
+            buildConfigField 'String', 'WEBVIEW_URL_BJJ_PROMO_TERMS', '"https://softlaunch.sandbox-bjj.co.id/legal/terms-conditions?device=mobile#warga-get-warga"'
+            buildConfigField 'String', 'WEBVIEW_URL_BJJ_PRIVACY_POLICY', '"https://softlaunch.sandbox-bjj.co.id/id-ID/legal/privacy-policy?device=mobile"'
+            buildConfigField 'String', 'WEBVIEW_URL_KYC_LANDING_PAGE','"https://cms-delivery-uat-gcp.astrapay.com/webviews/kyc/kyc-landing-page"'
+            buildConfigField 'String', 'WEBVIEW_URL_KYC_SUBMITTED_PAGE','"https://cms-delivery-uat-gcp.astrapay.com/webviews/kyc/kyc-submitted-page"'
+            buildConfigField 'String', 'WEBVIEW_URL_KYC_AUTOPREFERRED_LANDING_PAGE','"https://cms-delivery-uat-gcp.astrapay.com/webviews/kyc/kyc-autopreferred-page?partner=FIF"'
+            buildConfigField 'String', 'WEBVIEW_URL_AUTOMATIC_TOPUP','"https://smart-wallet-uat-webview.astrapay.com/topup-threshold"'
+
+            // Sumologic
+            buildConfigField 'String', 'BASE_URL_SUMOLOGIC_URLLOG', '"https://collectors.jp.sumologic.com/receiver/v1/http/"'
+            buildConfigField 'String', 'SUMOLOGIC_KEYID', '"ZaVnC4dhaV2SyybCZ3wkHqscSOW_s0wHi0FBqPx-gCxYST7ToNUP1hS6KjWZ0RoRK_Ovmsm6xGop6ZzMOLhSoMJYM_0c-rvFqP9KYih9DMfGfyXP2_z0qA=="'
+
+            buildConfigField("String", "EMBED_KEY", EmbedKey)
+            buildConfigField 'String', 'APPSFLYER_KEY', '"iyUfG9TdZeDRQ6TPWgJPQi"'
+            buildConfigField 'String', 'MOENGAGE_KEY', '"2BMFUYVYLIZ7GSTSTJM0W0ME"'
+            buildConfigField 'String', 'PAYLATER_ID', '"850500131313"'
+            buildConfigField 'String', 'SECRETKEY_REGISTER', '"Astrapay150!"'
+            buildConfigField 'String', 'SECRETKEY_CHANGEPIN', '"Astrapay150!"'
+            buildConfigField 'String', 'SECRETKEY_CHECKPIN', '"Astrapay150!"'
+            buildConfigField 'String', 'SECRETKEY_BILLER', '"Astrapay150!"'
+            buildConfigField 'String', 'SECRETKEY_CASHOUT', '"Astrapay150!"'
+            buildConfigField 'String', 'SECRETKEY_QRIS', '".bersamaqris987."'
+            buildConfigField 'String', 'SALT_QRIS', '"!behelpfulpeople!"'
+            buildConfigField 'int', 'FB_FETCH_INTERVAL', '10'
+
+            buildConfigField 'String', 'SHARED_PREF_MASTERKEY_ALIAS', '"ASTR4p@y"'
+            buildConfigField 'String', 'REDEEM_GUIDELINE_URL', '"redeem_guideline_uat"'
+        }
+        sit {
+            dimension "version"
+            applicationId "com.ada.astrapayupdate"
+            resValue "string", "app_name", "AstraPay SIT"
+
+            //BASEURL FRONTEND GATEAWAY
+            buildConfigField 'String', 'BASE_URL_FRONTEND_GATEWAY', '"https://frontend-sit.astrapay.com"'
+
+            // TRANSACTION HISTORY DETAIL BASEURL
+            buildConfigField 'String', 'URL_TRANSACTION_HISTORY_DETAIL', '"https://frontend-sit.astrapay.com/transaction-service/me/histories/{id}"'
+
+            //QRIS SDK Token
+            buildConfigField 'String', 'ASTRAPAY_SDK_QRIS_TOKEN', '"XTOKEN"'
+            buildConfigField 'String', 'ASTRAPAY_SDK_QRIS_ENV', '"SIT"'
+
+            buildConfigField 'String', 'BASE_URL_API', '"https://cygnus.astrapay.com"'
+            buildConfigField 'String', 'BASE_URL_FIFPAYREST', '"https://cygnus.astrapay.com"'
+            buildConfigField 'String', 'BASE_URL_NEW_API', '"https://frontend-sit.astrapay.com"'
+            buildConfigField 'String', 'BASE_URL_WEBVIEW', '"https://cygnus.astrapay.com"'
+            buildConfigField 'String', 'BASE_URL_CMS', '"https://cms-delivery-sit.astrapay.com"'
+            buildConfigField 'String', 'BASE_URL_PAYLATER', '"https://paylater-sit-api-gcp.astrapay.com/"'
+            buildConfigField 'String', 'BASE_URL_NOTIFICATION', '"https://notification-dev.astrapay.com"'
+
+            // FAQ BLOCK ACCOUNT
+            buildConfigField 'String', 'URL_FAQ_BLOCK_ACCOUNT', '"https://www.astrapay.com/faq"'
+
+            // CASH OUT API REST
+            buildConfigField 'String', 'BASE_URL_API_CASHOUT', '"http://172.20.6.64:8880/cashout-service/"'
+
+            buildConfigField 'String', 'WEBVIEW_URL_TERM_AND_CONDITION', '"https://cms-delivery-sit.astrapay.com/webviews/terms-and-conditions"'
+            buildConfigField 'String', 'WEBVIEW_URL_PRIVACY_POLICY', '"https://cms-delivery-sit.astrapay.com/webviews/privacy-policy"'
+            buildConfigField 'String', 'WEBVIEW_URL_FAQ', '"https://cms-delivery-sit.astrapay.com/webviews/faq"'
+            // Webview
+            buildConfigField 'String', 'WEBVIEW_URL_MAUCASH_FAQ', '"https://webapply.maucash.id/faq"'
+            buildConfigField 'String', 'WEBVIEW_URL_TOPUP', '"https://cms-delivery-sit.astrapay.com/webviews/top-up/top-up-method?account=%s&topupbalancemaximal=%.0f"'
+            buildConfigField 'String', 'WEBVIEW_URL_MITRA_LIST', '"https://cms-delivery-sit.astrapay.com/webviews/mitra-list"'
+            buildConfigField 'String', 'WEBVIEW_URL_MAUCASH_TERM_AND_CONDITION', '"https://cms-delivery-sit.astrapay.com/webviews/terms-and-conditions-maupaylater"'
+            buildConfigField 'String', 'WEBVIEW_URL_MAUCASH_DISCLAIMER', '"https://web.maucash.id/resource/protocol/disclaimer.html"'
+
+            buildConfigField 'String', 'WEBVIEW_URL_MAUCASH_LANDING_PAGE', '"https://cms-delivery-sit.astrapay.com/webviews/paylater/landing-page"'
+            buildConfigField 'String', 'WEBVIEW_URL_TERM_AND_CONDITION_REGISTRATION_BPJSTK', '"https://cms-delivery-sit.astrapay.com/webviews/tnc-registrasi-bpjstk"'
+            buildConfigField 'String', 'WEBVIEW_URL_WELCOME_PAGE_BJJ', '"https://cms-delivery-sit.astrapay.com/webviews/bjj/onboarding/welcome-page"'
+            buildConfigField 'String', 'WEBVIEW_URL_BJJ_PROMO_TERMS', '"https://softlaunch.sandbox-bjj.co.id/legal/terms-conditions?device=mobile#warga-get-warga"'
+            buildConfigField 'String', 'WEBVIEW_URL_BJJ_PRIVACY_POLICY', '"https://softlaunch.sandbox-bjj.co.id/id-ID/legal/privacy-policy?device=mobile"'
+            buildConfigField 'String', 'WEBVIEW_URL_KYC_LANDING_PAGE','"https://cms-delivery-sit.astrapay.com/webviews/kyc/kyc-landing-page"'
+            buildConfigField 'String', 'WEBVIEW_URL_KYC_SUBMITTED_PAGE','"https://cms-delivery-sit.astrapay.com/webviews/kyc/kyc-submitted-page"'
+            buildConfigField 'String', 'WEBVIEW_URL_KYC_AUTOPREFERRED_LANDING_PAGE','"https://cms-delivery-sit.astrapay.com/webviews/kyc/kyc-autopreferred-page?partner=FIF"'
+            buildConfigField 'String', 'WEBVIEW_URL_AUTOMATIC_TOPUP','"https://smart-wallet-sit-webview.astrapay.com/topup-threshold"'
+
+            // Sumologic
+            buildConfigField 'String', 'BASE_URL_SUMOLOGIC_URLLOG', '"https://collectors.jp.sumologic.com/receiver/v1/http/"'
+            buildConfigField 'String', 'SUMOLOGIC_KEYID', '"ZaVnC4dhaV2SyybCZ3wkHqscSOW_s0wHi0FBqPx-gCxYST7ToNUP1hS6KjWZ0RoRK_Ovmsm6xGop6ZzMOLhSoMJYM_0c-rvFqP9KYih9DMfGfyXP2_z0qA=="'
+
+            buildConfigField("String", "EMBED_KEY", EmbedKey)
+            buildConfigField 'String', 'APPSFLYER_KEY', '"iyUfG9TdZeDRQ6TPWgJPQi"'
+            buildConfigField 'String', 'MOENGAGE_KEY', '"2BMFUYVYLIZ7GSTSTJM0W0ME"'
+            buildConfigField 'String', 'PAYLATER_ID', '"850500131313"'
+            buildConfigField 'String', 'SECRETKEY_REGISTER', '"Astrapay150!"'
+            buildConfigField 'String', 'SECRETKEY_CHANGEPIN', '"Astrapay150!"'
+            buildConfigField 'String', 'SECRETKEY_CHECKPIN', '"Astrapay150!"'
+            buildConfigField 'String', 'SECRETKEY_BILLER', '"Astrapay150!"'
+            buildConfigField 'String', 'SECRETKEY_CASHOUT', '"Astrapay150!"'
+            buildConfigField 'String', 'SECRETKEY_QRIS', '".bersamaqris987."'
+            buildConfigField 'String', 'SALT_QRIS', '"!behelpfulpeople!"'
+            buildConfigField 'int', 'FB_FETCH_INTERVAL', '10'
+
+            buildConfigField 'String', 'SHARED_PREF_MASTERKEY_ALIAS', '"ASTR4p@y"'
+            buildConfigField 'String', 'REDEEM_GUIDELINE_URL', '"redeem_guideline_sit"'
+        }
+        prod {
+            dimension "version"
+            applicationId "com.ada.astrapay"
+            resValue "string", "app_name", "AstraPay"
+
+            //BASEURL FRONTEND GATEAWAY
+            buildConfigField 'String', 'BASE_URL_FRONTEND_GATEWAY', '"https://frontend.astrapay.com"'
+
+            // TRANSACTION HISTORY DETAIL BASEURL
+            buildConfigField 'String', 'URL_TRANSACTION_HISTORY_DETAIL', '"https://frontend.astrapay.com/transaction-service/me/histories/{id}"'
+
+            //QRIS SDK Token
+            buildConfigField 'String', 'ASTRAPAY_SDK_QRIS_TOKEN', '"XTOKEN"'
+            buildConfigField 'String', 'ASTRAPAY_SDK_QRIS_ENV', '"PROD"'
+
+            buildConfigField 'String', 'BASE_URL_API', '"https://orion.astrapay.com"'
+            buildConfigField 'String', 'BASE_URL_FIFPAYREST', '"https://restapi.astrapay.co.id"'
+            buildConfigField 'String', 'BASE_URL_NEW_API', '"https://frontend.astrapay.com"'
+            buildConfigField 'String', 'BASE_URL_WEBVIEW', '"https://orion.astrapay.com"'
+            buildConfigField 'String', 'BASE_URL_CMS', '"https://astrapay.com"'
+            buildConfigField 'String', 'BASE_URL_PAYLATER', '"https://paylatersvc.astrapay.com"'
+            buildConfigField 'String', 'BASE_URL_NOTIFICATION', '"https://notification.astrapay.com"'
+
+            // FAQ BLOCK ACCOUNT
+            buildConfigField 'String', 'URL_FAQ_BLOCK_ACCOUNT', '"https://www.astrapay.com/faq"'
+
+            // CASH OUT API REST
+            buildConfigField 'String', 'BASE_URL_API_CASHOUT', '"http://172.20.6.64:8880/cashout-service/"'
+
+            buildConfigField 'String', 'WEBVIEW_URL_TERM_AND_CONDITION', '"https://www.astrapay.com/webviews/terms-and-conditions"'
+            buildConfigField 'String', 'WEBVIEW_URL_PRIVACY_POLICY', '"https://www.astrapay.com/webviews/privacy-policy"'
+            buildConfigField 'String', 'WEBVIEW_URL_FAQ', '"https://www.astrapay.com/webviews/faq"'
+            // Webview
+            buildConfigField 'String', 'WEBVIEW_URL_MAUCASH_FAQ', '"https://webapply.maucash.id/faq"'
+            buildConfigField 'String', 'WEBVIEW_URL_TOPUP', '"https://www.astrapay.com/webviews/top-up/top-up-method?account=%s&topupbalancemaximal=%.0f"'
+            buildConfigField 'String', 'WEBVIEW_URL_MITRA_LIST', '"https://www.astrapay.com/webviews/mitra-list"'
+            buildConfigField 'String', 'WEBVIEW_URL_MAUCASH_TERM_AND_CONDITION', '"https://www.astrapay.com/webviews/terms-and-conditions-maupaylater"'
+            buildConfigField 'String', 'WEBVIEW_URL_MAUCASH_DISCLAIMER', '"https://web.maucash.id/resource/protocol/disclaimer.html"'
+            buildConfigField 'String', 'WEBVIEW_URL_MAUCASH_LANDING_PAGE', '"https://www.astrapay.com/webviews/paylater/landing-page"'
+            buildConfigField 'String', 'WEBVIEW_URL_TERM_AND_CONDITION_REGISTRATION_BPJSTK', '"https://www.astrapay.com/webviews/tnc-registrasi-bpjstk"'
+            buildConfigField 'String', 'WEBVIEW_URL_WELCOME_PAGE_BJJ', '"https://astrapay.com/webviews/bjj/onboarding/welcome-page"'
+            buildConfigField 'String', 'WEBVIEW_URL_BJJ_PROMO_TERMS', '"https://softlaunch.sandbox-bjj.co.id/legal/terms-conditions?device=mobile#warga-get-warga"'
+            buildConfigField 'String', 'WEBVIEW_URL_BJJ_PRIVACY_POLICY', '"https://softlaunch.sandbox-bjj.co.id/id-ID/legal/privacy-policy?device=mobile"'
+            buildConfigField 'String', 'WEBVIEW_URL_KYC_LANDING_PAGE','"https://www.astrapay.com/webviews/kyc/kyc-landing-page"'
+            buildConfigField 'String', 'WEBVIEW_URL_KYC_SUBMITTED_PAGE','"https://www.astrapay.com/webviews/kyc/kyc-submitted-page"'
+            buildConfigField 'String', 'WEBVIEW_URL_KYC_AUTOPREFERRED_LANDING_PAGE','"https://www.astrapay.com/webviews/kyc/kyc-autopreferred-page?partner=FIF"'
+            buildConfigField 'String', 'WEBVIEW_URL_AUTOMATIC_TOPUP','"https://smart-wallet-webview.astrapay.com/topup-threshold"'
+
+            // Sumologic
+            buildConfigField 'String', 'BASE_URL_SUMOLOGIC_URLLOG', '"https://collectors.jp.sumologic.com/receiver/v1/http/"'
+            buildConfigField 'String', 'SUMOLOGIC_KEYID', '"ZaVnC4dhaV3amGt3lOcqApJe7ufskusFsbydpfEs5pTZNRl_mS233S0rJGweLR1-k3eQIYVwRclrfprHEc_DppNt9G9Qb7bqBjQRHw2pyBMtAHblT2RBQw=="'
+
+            buildConfigField("String", "EMBED_KEY", EmbedKey)
+            buildConfigField 'String', 'APPSFLYER_KEY', '"iyUfG9TdZeDRQ6TPWgJPQi"'
+            buildConfigField 'String', 'MOENGAGE_KEY', '"NKMH8IAO8LZIIODNB37UKMBZ"'
+            buildConfigField 'String', 'PAYLATER_ID', '"850500210527"'
+            buildConfigField 'String', 'SECRETKEY_REGISTER', '"Astrapay150!"'
+            buildConfigField 'String', 'SECRETKEY_CHANGEPIN', '"Astrapay150!"'
+            buildConfigField 'String', 'SECRETKEY_CHECKPIN', '"Astrapay150!"'
+            buildConfigField 'String', 'SECRETKEY_BILLER', '"Astrapay150!"'
+            buildConfigField 'String', 'SECRETKEY_CASHOUT', '"Astrapay150!"'
+            buildConfigField 'String', 'SECRETKEY_QRIS', '".bersamaqris987."'
+            buildConfigField 'String', 'SALT_QRIS', '"!behelpfulpeople!"'
+            buildConfigField 'int', 'FB_FETCH_INTERVAL', '3600'
+
+            buildConfigField 'String', 'SHARED_PREF_MASTERKEY_ALIAS', '"ASTR4p@y"'
+            buildConfigField 'String', 'REDEEM_GUIDELINE_URL', '"redeem_guideline"'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def flavorName = variant.name
+            def versionCode = variant.versionCode
+            def versionName = variant.versionName
+            if (flavorName.contains("uat")) {
+                outputFileName = "astrapay-uat.apk"
+            } else if (flavorName.contains("sit")) {
+                outputFileName = "astrapay-sit.apk"
+            } else if (flavorName.contains("prod")) {
+                outputFileName = "astrapay-prod.apk"
+            } else if (flavorName.contains("mock")) {
+                outputFileName = "astrapay-mock.apk"
+            }
+        }
+    }
+}
+
+dependencies {
+
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.material
+    implementation libs.androidx.activity
+    implementation libs.androidx.constraintlayout
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.espresso.core
+}
