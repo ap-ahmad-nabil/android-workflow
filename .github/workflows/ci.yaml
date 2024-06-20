@@ -91,4 +91,4 @@ jobs:
 
       - name: Display AAB (App Bundle) Release - ${{ env.repository_name }} structure of downloaded files
         run: ls -R
-        working-directory: ${{ env.main_project_module }}/build/outputs/bundle/release/
+        working-directory: ${{ env.main_project_module }}/build/outputs/bundle/${{ github.event.inputs.environment }}/release/
