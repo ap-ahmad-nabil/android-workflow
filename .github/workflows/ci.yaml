@@ -1,4 +1,4 @@
-name: Generated APK AAB (Download)
+name: Generated APK (Artifact)
 
 env:
   # The name of the main module repository
@@ -57,13 +57,4 @@ jobs:
       - name: Upload APK Release - ${{ env.repository_name }}
         uses: actions/download-artifact@v3
         with:
-          path: ${{ env.main_project_module }}/build/outputs/apk/${{ github.event.inputs.environment }}/release/
-
-      - name: Display APK Release - ${{ env.repository_name }} structure of downloaded files
-        run: ls -R
-        working-directory: ${{ env.main_project_module }}/build/outputs/apk/${{ github.event.inputs.environment }}/release/
-
-      - name: Download Artifact APK Release - ${{ env.repository_name }}
-        uses: actions/download-artifact@v3
-        with:
-          path: ${{ env.main_project_module }}/build/outputs/apk/${{ github.event.inputs.environment }}/release/
+          path: ${{ env.main_project_module }}/build/outputs/apk/${{ github.event.inputs.environment }}/release/astrapay-${{ github.event.inputs.environment }}.apk
