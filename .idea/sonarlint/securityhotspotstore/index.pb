@@ -17,3 +17,5 @@ S
 #.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0
 X
 (gradle/wrapper/gradle-wrapper.properties,f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
+I
+.github/workflows/ci.yaml,a/9/a91b1970808e533a5de67f93824231e12770a765
